@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Nome": "Quinta Alegre", "Morada": "Campo das Amoreiras, 94, Charneca do Lumiar:", "Ativo": 1, "Lat": 38.786991228486329, "Lon": -9.1438795475255592 }, "geometry": { "type": "Point", "coordinates": [ -9.143879547525559, 38.786991228486329 ] } },
+{ "type": "Feature", "properties": { "Nome": "Livraria Barata", "Morada": "Av. de Roma, 11-A", "Ativo": 1, "Lat": 38.743261144832026, "Lon": -9.1387976306571925 }, "geometry": { "type": "Point", "coordinates": [ -9.138797630657193, 38.743261144832026 ] } },
+{ "type": "Feature", "properties": { "Nome": "Avenidas", "Morada": "Rua Alberto de Sousa, 10 A", "Ativo": 1, "Lat": 38.746158853892936, "Lon": -9.1583044538670944 }, "geometry": { "type": "Point", "coordinates": [ -9.158304453867094, 38.746158853892936 ] } },
+{ "type": "Feature", "properties": { "Nome": "Boutique da Cultura ", "Morada": "Avenida do Colégio Militar, 1500-187 Lisboa", "Ativo": 0, "Lat": 38.757743773055054, "Lon": -9.1853411306568518 }, "geometry": { "type": "Point", "coordinates": [ -9.185341130656852, 38.757743773055054 ] } },
+{ "type": "Feature", "properties": { "Nome": "Cine Turim", "Morada": "Estr. de Benfica 723, 1500-337 Lisboa", "Ativo": 0, "Lat": 38.75071613914745, "Lon": -9.2023614802478377 }, "geometry": { "type": "Point", "coordinates": [ -9.202361480247838, 38.75071613914745 ] } }
+]
+}
