@@ -10,14 +10,14 @@
     <script src='https://www.unpkg.com/mapbox-gl-shadow-simulator/dist/mapbox-gl-shadow-simulator.umd.min.js'></script>
     <style>
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Montserrat;
             padding: 0px;
             margin: 0px;
         }
 
         #mapid,
         #canvas {
-            height: calc(100vh - 100px); 
+            height: calc(100vh - 100px);
             flex: 1 1 50vw;
         }
 
@@ -49,11 +49,20 @@
         }
     </style>
     <title>Mapa Sombra Lisboa</title>
-    
+
 </head>
 
 <body>
-    <div class="panel"></div>
+    <div class="panel">
+        <div style="display: flex; align-items: center;">
+            <img src="https://cdn0.iconfinder.com/data/icons/medical-health-vol-2-1/512/Cold_hot_Weather_Counter_temperature_thermometer-512.png" alt="Thermometer Icon" width="70" height="70" style="margin-right: 10px;">
+            <div>
+                <span style="font-weight: bold; font-size:20px" >Sombras de Lisboa</span><br>
+                <span style="font-size: 15px;">Onde existe sombra de edifícios na cidade tendo em conta a altura do ano e hora? Este projeto faz parte da análise <a href="https://manuelbanza.github.io/refugios-climaticos-lisboa-priorizar/">"Refúgios Climáticos"</a>.</span><br>
+                <span style="font-size: 13px;">Mapa: <a href="https://manuelbanza.github.io">Manuel Banza</a> Dados sombra: <a href="https://shademap.app/about/">ShadeMap</a>.</span>
+            </div>            
+        </div>
+    </div>
     <span id="tooltip"></span>
     <div style="position:absolute;display:flex;flex-wrap:wrap;z-index:2000">
         <div id="output"></div>
@@ -71,8 +80,8 @@
         const map = new mapboxgl.Map({
             container: 'mapid',
             style: 'mapbox://styles/tppiotrowski/claiiur19000314o6zh427xv1',
-            center: { lng: -9.1375946, lat: 38.7331092 },
-            zoom: 14, // starting zoom
+            center: { lng: -9.131761, lat: 38.732992 },
+            zoom: 16, // starting zoom
             maxPitch: 45, // ShadeMap does not work with pitch > 45
             hash: true
         });
