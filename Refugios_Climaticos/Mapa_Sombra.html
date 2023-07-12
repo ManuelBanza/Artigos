@@ -17,7 +17,7 @@
 
         #mapid,
         #canvas {
-            height: 100vh;
+            height: calc(100vh - 100px); 
             flex: 1 1 50vw;
         }
 
@@ -41,11 +41,19 @@
             border-radius: 3px;
             z-index: 2000;
         }
+
+        .panel {
+            width: 100%;
+            height: 100px;
+            background-color: white;
+        }
     </style>
-    <title>ShadeMap: Direct sunlight chart</title>
+    <title>Mapa Sombra Lisboa</title>
+    
 </head>
 
 <body>
+    <div class="panel"></div>
     <span id="tooltip"></span>
     <div style="position:absolute;display:flex;flex-wrap:wrap;z-index:2000">
         <div id="output"></div>
@@ -70,6 +78,7 @@
         });
         map.addControl(new mapboxgl.NavigationControl());
         /* End Mapbox setup */
+
 
         /* ShadeMap setup */
         const canvas = document.getElementById('canvas');
@@ -283,8 +292,25 @@
             link.click();
             document.body.removeChild(link);
         });
-		/* End ShadeMap setup */
+        /* End ShadeMap setup */
 
+        /* Add GeoJSON layer */
+        map.on('load', () => {
+            map.addSource('geojson-data', {
+                type: 'geojson',
+                data: 'https://manuelbanza.github.io/Artigos/Refugios_Climaticos/Ambiente_DMEVAE.geojson'
+            });
+
+            map.addLayer({
+                id: 'geojson-layer',
+                type: 'circle',
+                source: 'geojson-data',
+                paint: {
+                    'circle-color': '#48AD68',
+                    'circle-radius': 4
+                }
+            });
+        });
     </script>
 </body>
 

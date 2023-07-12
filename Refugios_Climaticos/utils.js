@@ -65,16 +65,10 @@ const getTimeZone = (map) => {
 };
 
 const UTCOffsetByTimeZone = (date = new Date(), timeZone = "UTC") => {
-  const utcDate = new Date(date.toLocaleString("pt-PT", { timeZone: "UTC" }));
-  const tzDate = new Date(date.toLocaleString("pt-PT", { timeZone }));
+  const utcDate = new Date(date.toLocaleString("en-US", { timeZone: "UTC" }));
+  const tzDate = new Date(date.toLocaleString("en-US", { timeZone }));
   return utcDate.getTime() - tzDate.getTime();
 };
-
-const date = new Date(); // Current date and time
-const lisbonTimeZone = "Europe/Lisbon";
-const offset = UTCOffsetByTimeZone(date, lisbonTimeZone);
-console.log("Offset in milliseconds:", offset);
-
 
 /**
  * Ensure vector data is loaded
