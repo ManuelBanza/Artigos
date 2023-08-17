@@ -284,54 +284,64 @@
 
     
 
-    // Create a popup object
-    var popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false
-    });
+  // Create a popup object
+  var popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false
+  });
 
-    // Add the mousemove event listener to the 'poi_edificios_polygons' layer
-    map.on('mousemove', 'poi_edificios_polygons', function(e) {
-        var feature = e.features[0];
-        var cumpreRegra = feature.properties.Cumpre_Regra === 0 ? 'Não' : 'Sim';
-        var nArvores30m = feature.properties.N_Arvores_30m;
-        var treeCoverPercentage = feature.properties.Tree_Cover_Percentage;
-        var jardim300m = feature.properties.Jardim_a_300m === 0 ? 'Não' : 'Sim';
-        var jardim = feature.properties.Name;
+  // Add the mousemove event listener to the 'poi_edificios_polygons' layer
+  map.on('mousemove', 'poi_edificios_polygons', function(e) {
+      var feature = e.features[0];
+      var cumpreRegra = feature.properties.Cumpre_Regra === 0 ? 'Não' : 'Sim';
+      var nArvores30m = feature.properties.N_Arvores_30m;
+      var treeCoverPercentage = feature.properties.Tree_Cover_Percentage;
+      var jardim300m = feature.properties.Jardim_a_300m === 0 ? 'Não' : 'Sim';
+      var jardim = feature.properties.Name;
 
-        var popupContent = '<div style="background-color: #F7E5AB; color: #E0743B; font-size: 16px; padding: 10px; font-family: Montserrat; border: none;">';
-        popupContent += '<strong>Cumpre Regra:</strong> ' + cumpreRegra + '<br>';
-        popupContent += '<strong>Número de Árvores a 30m:</strong> ' + nArvores30m + '<br>';
-        popupContent += '<strong>Percentagem de Cobertura de Árvores:</strong> ' + treeCoverPercentage + '%<br>';
-        popupContent += '<strong>Jardim a 300m:</strong> ' + jardim300m + '<br>';
-        popupContent += '<strong>Jardim:</strong> ' + jardim + '<br>';
-        popupContent += '</div>';
+      var popupContent = '<div style="background-color: #F7E5AB; color: #E0743B; font-size: 16px; padding: 10px; font-family: Montserrat; border: none;">';
+      popupContent += '<strong>Cumpre Regra:</strong> ' + cumpreRegra + '<br>';
+      popupContent += '<strong>Número de Árvores a 30m:</strong> ' + nArvores30m + '<br>';
+      popupContent += '<strong>Percentagem de Cobertura de Árvores:</strong> ' + treeCoverPercentage + '%<br>';
+      popupContent += '<strong>Jardim a 300m:</strong> ' + jardim300m + '<br>';
+      popupContent += '<strong>Jardim:</strong> ' + jardim + '<br>';
+      popupContent += '</div>';
 
-        popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
-    });
+      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
+  });
 
-    // Add the mouseleave event listener to the 'poi_edificios_polygons' layer
-    map.on('mouseleave', 'poi_edificios_polygons', function() {
-        popup.remove();
-    });
+  // Add a click event listener to the 'poi_edificios_polygons' layer
+  map.on('click', 'poi_edificios_polygons', function(e) {
+      var feature = e.features[0];
+      var cumpreRegra = feature.properties.Cumpre_Regra === 0 ? 'Não' : 'Sim';
+      var nArvores30m = feature.properties.N_Arvores_30m;
+      var treeCoverPercentage = feature.properties.Tree_Cover_Percentage;
+      var jardim300m = feature.properties.Jardim_a_300m === 0 ? 'Não' : 'Sim';
+      var jardim = feature.properties.Name;
 
-    // Add a click event listener to the map
-    map.on('click', function() {
-        // Close the popup when the map is clicked
-        if (popup.isOpen()) {
-            popup.remove();
-        }
-    });
+      var popupContent = '<div style="background-color: #F7E5AB; color: #E0743B; font-size: 16px; padding: 10px; font-family: Montserrat; border: none;">';
+      popupContent += '<strong>Cumpre Regra:</strong> ' + cumpreRegra + '<br>';
+      popupContent += '<strong>Número de Árvores a 30m:</strong> ' + nArvores30m + '<br>';
+      popupContent += '<strong>Percentagem de Cobertura de Árvores:</strong> ' + treeCoverPercentage + '%<br>';
+      popupContent += '<strong>Jardim a 300m:</strong> ' + jardim300m + '<br>';
+      popupContent += '<strong>Jardim:</strong> ' + jardim + '<br>';
+      popupContent += '</div>';
 
-    // Add a click event listener to the popup
-    popup.on('click', function() {
-        // Toggle the popup's open state
-        if (popup.isOpen()) {
-            popup.remove();
-        } else {
-            popup.addTo(map);
-        }
-    });
+      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
+  });
+
+  // Add a mouseleave event listener to the 'poi_edificios_polygons' layer
+  map.on('mouseleave', 'poi_edificios_polygons', function() {
+      popup.remove();
+  });
+
+  // Add a click event listener to the map
+  map.on('click', function() {
+      // Close the popup when the map is clicked
+      if (popup.isOpen()) {
+          popup.remove();
+      }
+  });
 
 
 
