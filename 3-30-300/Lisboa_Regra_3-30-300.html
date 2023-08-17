@@ -233,36 +233,45 @@
         'filter': ['>', ['get', 'ICUoc_tar'], 1.5]
     });
 
-    // Add a legend to the map
-    var legendContainer = document.createElement('div');
-    legendContainer.className = 'mapboxgl-ctrl';
-    legendContainer.style.padding = '10px';
-    legendContainer.style.fontFamily = 'Montserrat';
-    legendContainer.style.fontSize = '12px';
-    legendContainer.style.position = 'absolute';
-    legendContainer.style.bottom = '10px';
-    legendContainer.style.right = '10px';
-    legendContainer.innerHTML = `
-      <div style="text-align: center; margin-bottom: 5px;">ICU</div>
-      <div style="display: flex; align-items: center;">
-        <div style="width: 15px; height: 15px; background-color: #FEF0D9;"></div>
-        <div style="width: 15px; height: 15px; background-color: #FDD49E;"></div>
-        <div style="width: 15px; height: 15px; background-color: #FDBB84;"></div>
-        <div style="width: 15px; height: 15px; background-color: #FC8D59;"></div>
-        <div style="width: 15px; height: 15px; background-color: #E34A33;"></div>
-        <div style="width: 15px; height: 15px; background-color: #B30000;"></div>
-      </div>
-      <div style="display: flex; justify-content: space-between; margin-top: 5px;">
-        <div>1.5</div>
-        <div>   </div>
-        <div>   </div>
-        <div>   </div>
-        <div>   </div>
-        <div>4.5</div>
-      </div>
-    `;
+  // Add a legend to the map
+  var legendContainer = document.createElement('div');
+      legendContainer.className = 'mapboxgl-ctrl';
+      legendContainer.style.padding = '10px';
+      legendContainer.style.fontFamily = 'Montserrat';
+      legendContainer.style.fontSize = '12px';
+      legendContainer.style.position = 'absolute';
+      legendContainer.style.bottom = '10px';
+      legendContainer.style.right = '10px';
+      legendContainer.innerHTML = `
+        <div style="text-align: center; margin-bottom: 5px;">Edifício Cumpre Regra</div>
+        <div style="display: flex; align-items: center;">
+          <div style="width: 15px; height: 15px; background-color: #4AB482;"></div>
+          <div style="margin-left: 5px;">Cumpre</div>
+        </div>
+        <div style="display: flex; align-items: center;">
+          <div style="width: 15px; height: 15px; background-color: #828793;"></div>
+          <div style="margin-left: 5px;">Não Cumpre</div>
+        </div>
+        <div style="text-align: center; margin-bottom: 5px;">ICU</div>
+        <div style="display: flex; align-items: center;">
+          <div style="width: 15px; height: 15px; background-color: #FEF0D9;"></div>
+          <div style="width: 15px; height: 15px; background-color: #FDD49E;"></div>
+          <div style="width: 15px; height: 15px; background-color: #FDBB84;"></div>
+          <div style="width: 15px; height: 15px; background-color: #FC8D59;"></div>
+          <div style="width: 15px; height: 15px; background-color: #E34A33;"></div>
+          <div style="width: 15px; height: 15px; background-color: #B30000;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+          <div>1.5</div>
+          <div>   </div>
+          <div>   </div>
+          <div>   </div>
+          <div>   </div>
+          <div>4.5</div>
+        </div>
+      `;
 
-    map.getContainer().appendChild(legendContainer);
+      map.getContainer().appendChild(legendContainer);
 
 
   // BIPZIP
@@ -307,12 +316,12 @@
         var jardim300m = feature.properties.Jardim_a_300m === 0 ? 'Não' : 'Sim';
         var jardim = feature.properties.Name;
 
-        var popupContent = '<div style="background-color: #F7E5AB; font-size: 14px; padding: 10px; font-family: Montserrat; border: none;">';
+        var popupContent = '<div style="background-color: #F7E5AB; font-size: 13px; padding: 10px; font-family: Montserrat; border: none;">';
         popupContent += '<strong>Cumpre Regra:</strong> <span style="color: ' + getFontColor(cumpreRegra) + '; font-weight: bold;">' + cumpreRegra + '</span><br>';
         popupContent += '<strong>· Nº de Árvores:</strong> ' + nArvores30m + '<br>';
         popupContent += '<strong>· % Cobertura Verde:</strong> ' + treeCoverPercentage + '%<br>';
-        popupContent += '<strong>· Jardim a 300m:</strong> ' + jardim300m + '<br>';
-        popupContent += '<strong>· Jardim:</strong> ' + jardim + '<br>';
+        popupContent += '<strong>· Espaço Verde a 300m:</strong> ' + jardim300m + '<br>';
+        popupContent += '(' + jardim + ')' + '<br>';
         popupContent += '</div>';
 
         popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
