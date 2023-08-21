@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise 3-30-300 Lisboa - Metodologia</title>
+</head>
+<body>
+    <h1>Análise 3-30-300 Lisboa</h1>
+    <h2>Metodologia</h2>
+
+    <h3>Fontes de dados usadas:</h3>
+    <ul>
+        <li>Edifícios de Lisboa (Open Street Map)</li>
+        <li>Árvores em Lisboa (Câmara Municipal Lisboa)</li>
+        <li>Espaços verdes de Lisboa (Discord Lisboa Para Pessoas)</li>
+        <li>Tree Cover Density 2018 (Copernicus)</li>
+        <li>Street Tree Layer (STL) 2018 (Copernicus)</li>
+    </ul>
+
+    <h3>Tratamento de dados</h3>
+    <p>Para o tratamento dos dados e cálculo da regra procedemos aos seguintes passos:</p>
+
+    <strong>Edifícios:</strong>
+    <ul>
+        <li>Importar todos os edifícios de Lisboa através do Open Street Map</li>
+        <li>Criar o centroid (ponto mais central do edifício) para cada polígono que representa cada edifício. Este ponto será a base para calcular as 3 regras (3, 30, 300).</li>
+    </ul>
+
+    <strong>Regra 3:</strong>
+    <ul>
+        <li>Usar os dataset <a href="https://geodados-cml.hub.arcgis.com/datasets/arvoredo/explore">Árvores em Lisboa</a>. A atualização dos mesmos é da CML, caso encontres alguma incongruência nos dados por favor ajuda a câmara e a cidade a ter o dataset o mais atualizado possível enviando um e-mail para: geodados@cm-lisboa.pt</li>
+        <li>Calculou-se um raio de 50 metros desde cada centroid (ponto mais central do edifício)</li>
+        <li>Calculou-se o número de árvores que estão dentro do raio descrito no ponto acima</li>
+    </ul>
+
+    <strong>Regra 30:</strong>
+    <ul>
+        <li>Importar dados da provenientes de imagens satélites da Copernico <a href="https://land.copernicus.eu/pan-european/high-resolution-layers/forests/tree-cover-density/status-maps/tree-cover-density-2018">Tree Cover Density 2018</a> <a href="https://land.copernicus.eu/local/urban-atlas/street-tree-layer-stl-2018">Street Tree Layer</a></li>
+        <li>Não cruzou-se os dados referidos acima, bem como os pontos do árvores de Lisboa utilizadas para a regra 3, de forma a verificar se existem árvores que não foram contabilizadas nas imagens satélite. Nos casos em que se verificou isso, decidiu-se atribuir um raio de 1.5 metros a cada árvores, de forma a simular uma copa da árvore. O valor 1.5 metros é bastante conservador mas foi optado por se tratar de algo bastante difícil de prever segundo vários estudos consultados. Apontou-se para o valor médio das árvores mais recentes, até porque serão as árvores implementadas após 2018 que não constam nas imagens satélite.</li>
+        <li>Calculou-se para cada secção estatística fornecida pelo INE, a área de cobertura verde, usando os dados dos pontos acima</li>
+    </ul>
+
+    <strong>Regra 300:</strong>
+    <ul>
+        <li>Usar os dataset <a href="https://www.google.com/maps/d/u/0/viewer?ll=38.73506809596677%2C-9.13856244522261&z=14&mid=1WoxC-scPwblyYQftO9qmdM_e4PZFi_A">Espaços verdes de Lisboa</a>. A atualização dos mesmos é realizada pela comunidade do Discord do Lisboa Para Pessoas. Verificando-se que tinham parque mais recentes que não constavam nos dados da CML.</li>
+        <li>Foram usadas as camadas que se enquadram apenas em jardins e parques</li>
+        <li>Calculou-se um raio de 300 metros desde cada centroid (ponto mais central do edifício)</li>
+        <li>Identificou-se se esse raio intersectava algum dos jardins ou parques</li>
+    </ul>
+</body>
+</html>
