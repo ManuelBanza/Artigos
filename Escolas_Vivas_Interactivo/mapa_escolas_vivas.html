@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Lisboa: Escolas Vivas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+        #map {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .chapter, .section, .yellow-section {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .chapter {
+            color: white;
+        }
+        .chapter h1 {
+            font-size: 3em;
+            margin: 0;
+            font-weight: 500;
+        }
+        .chapter h2 {
+            font-size: 1.5em;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+        .chapter1 {
+            background-color: #35b591;
+        }
+        .chapter2 {
+            background-color: #f68187;
+        }
+        .chapter3 {
+            background-color: #fffaf1;
+        }
+        .scroll-icon {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1em;
+            animation: bounce 2s infinite;
+            color: white;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        .legend {
+            position: absolute;
+            bottom: 70px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 12px;
+            font-family: 'Montserrat', sans-serif;
+            color: black;
+            z-index: 10;
+            text-align: left;
+        }
+        .legend-title {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+        }
+        .legend-item span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .text-box {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            max-width: 800px;
+            line-height: 1.5;
+            font-weight: 500;
+            text-align: justify;
+        }
+        .text-red {
+            color: #f68187;
+        }
+        .text-green {
+            color: #35b591;
+        }
+        .yellow-section {
+            background-color: #ebc26a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            flex-direction: column;
+        }
+        .yellow-section img {
+            max-width: 60%;
+            max-height: 70%;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        #section11 {
+            position: relative;
+            height: 300vh; /* Adjust to accommodate sections 12 and 13 */
+            background-color: #fffaf1; /* Fallback color */
+        }
+
+        #section11 .image-container {
+            position: sticky;
+            top: 0;
+            height: 100vh; /* Full height of the viewport */
+            width: 100%;   /* Full container width */
+            z-index: 0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;    /* Center vertically */
+            overflow: hidden;
+            text-align: center; /* Ensure alignment */
+        }
+
+        #section11 .image-container img {
+            width: auto; /* Adjust width automatically to preserve aspect ratio */
+            height: 100%; /* Scale the image to take up full height of the container */
+            max-width: 90%; /* Prevent the image from being too wide */
+            object-fit: contain; /* Ensure the whole image is visible */
+            display: block;
+            margin: auto; /* Center the image */
+            position: relative; /* Allow fine-tuned positioning */
+            left: 45%; /* Move the image horizontally to the center */
+            transform: translateX(-50%); /* Compensate for the image's width to center it perfectly */
+        }
+
+
+
+
+
+        #section11 .text-box-container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        #section12, #section13 {
+            background: none; /* Remove any background */
+            padding: 0;
+            max-width: 800px;
+            margin: 50px auto;
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #18224C; /* Ensure text remains readable */
+            text-align: justify;
+        }
+
+        #section14 {
+            position: relative;
+            height: 200vh; /* Make it tall enough to allow scrolling through content */
+            background-color: #fffaf1; /* Fallback color */
+        }
+
+        #section14 .image-container {
+            position: sticky;
+            top: 0;
+            height: 100vh; /* Full height of the viewport */
+            width: 100%;   /* Full container width */
+            z-index: 0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;    /* Center vertically */
+            overflow: hidden;
+            text-align: center; /* Ensure alignment */
+        }
+
+        #section14 .image-container img {
+            width: auto; /* Adjust width automatically to preserve aspect ratio */
+            height: 100%; /* Scale the image to take up full height of the container */
+            max-width: 90%; /* Prevent the image from being too wide */
+            object-fit: contain; /* Ensure the whole image is visible */
+            display: block;
+            margin: auto; /* Center the image */
+            position: relative; /* Allow fine-tuned positioning */
+            left: 45%; /* Move the image horizontally to the center */
+            transform: translateX(-50%); /* Compensate for the image's width to center it perfectly */
+        }
+
+
+
+
+        #section14 .text-box-container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        #section15 {
+            background: none; /* Remove any background */
+            padding: 0;
+            max-width: 800px;
+            margin: 50px auto;
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #18224C; /* Ensure text remains readable */
+            text-align: justify; /* Keep the text aligned properly */
+        }
+
+        .continuous-text-section {
+            background-color: #fffaf1;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-size: 1.2em;
+            color: #18224C;
+            text-align: justify;
+        }
+
+        .text-block {
+            margin-bottom: 20px; /* Space between paragraphs */
+        }
+
+        @media (max-width: 768px) {
+            .content-container {
+                font-size: 1em; /* Reduce font size for tablets */
+                line-height: 1.5;
+                padding: 20px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-container {
+                font-size: 0.9em; /* Further reduce font size for mobile */
+                line-height: 1.4;
+                padding: 10px;
+            }
+
+            .text-block {
+                margin-bottom: 15px; /* Adjust spacing for smaller screens */
+            }
+        }
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Chapter 1 -->
+    <div class="chapter chapter1" id="chapter1">
+        <h1>Escolas Vivas</h1>
+        <h2>De espaços escolares a Centros Urbanos Multifuncionais de Lisboa</h2>
+        <p>Manuel Banza</p>
+        <p>(For english click here)</p>
+        <div class="scroll-icon">⬇ Continue a fazer scroll para baixo</div>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="section" id="section1">
+        <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
+        <div class="legend">
+            <div class="legend-title">Ilha de calor ao entardecer</div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FEF0D9;"></div><span>1.5 - 2.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FDD49E;"></div><span>2.0 - 2.5</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FDBB84;"></div><span>2.5 - 3.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FC8D59;"></div><span>3.0 - 3.5</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #E34A33;"></div><span>3.5 - 4.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #B30000;"></div><span>4.0 - 4.5</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="section" id="section2">
+        <div class="text-box text-red">
+            Lisboa é a sétima cidade da Europa mais exposta ao calor, um problema que tem agravado o número de mortes relacionadas com as ondas de calor e acentuado as desigualdades sociais. O efeito de ilha de calor, provocado pela urbanização densa e pela escassez de vegetação, afeta desproporcionalmente os mais vulneráveis, como idosos e crianças. Portugal é ainda o segundo pior país da União Europeia em termos de capacidade das pessoas para arrefecerem as suas habitações.
+        </div>
+        <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="section" id="section3">
+        <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
+        <div class="legend">
+            <div class="legend-title">10m2 per capita por freguesia</div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #B30000;"></div><span>0 - 5</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FC8D59;"></div><span>5 - 10</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #60BD7D;"></div><span>> 10</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="section" id="section4">
+        <div class="text-box text-green">
+            Lisboa carece de espaços públicos que fomentem o convívio e o sentimento de pertença. Em 16 dos 24 distritos, a área verde por habitante é inferior aos 10 m² recomendados pela OMS, limite essencial para a saúde física e mental. Além de promoverem lazer e socialização, os espaços verdes mitigam a poluição e o calor urbano, sendo fundamentais para cidades mais inclusivas e resilientes face às mudanças climáticas.
+        </div>
+        <div class="scroll-icon map">⬇ Continue a fazer scroll para baixo</div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="yellow-section" id="section5">
+        <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/gentrificacao.png" alt="Gentrificação">
+        <div style="color: black; font-size: 1.2em; max-width: 800px; line-height: 1.5; font-weight: 500; text-align: justify; margin-top: 20px;">
+            Segundo a Confederação Portuguesa de Coletividades de Cultura, Recreio e Desporto, mais de 20% dos coletivos desapareceram em Lisboa nos últimos 24 anos, pressionados pela gentrificação, o turismo e o aumento das rendas, que dificultam a manutenção ou obtenção de novos espaços.
+        </div>
+        <div class="scroll-icon text">⬇ Continue a fazer scroll para baixo</div>
+    </div>
+
+    <!-- Section 6 -->
+    <div class="yellow-section" id="section6">
+        <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/mensagem_sirigaita.png" alt="Mensagem Sirigaita">
+        <div style="color: black; font-size: 1.2em; max-width: 800px; line-height: 1.5; font-weight: 500; text-align: justify; margin-top: 20px;">
+            Coletivos como a Sirigaita e a Zona Franca dos Anjos que já receberem ordem de despejo resistem, promovendo eventos culturais e ações políticas.
+        </div>
+    </div>
+
+
+    <!-- Chapter 2 -->
+    <div class="chapter chapter2" id="chapter2">
+        <h1>Se não há espaço para construção...</h1>
+        <h2>Como podemos criar melhores espaços públicos, promover a coesão social e combater as alterações climáticas?</h2>
+        <p>Além disso, que tipo de operações urbanas em Lisboa podem ser reconfiguradas e otimizadas para aumentar e melhorar o espaço público disponível?</p>
+        <div class="scroll-icon">⬇ Continue a fazer scroll para baixo</div>
+    </div>
+
+    <!-- Chapter 3 -->
+    <div class="chapter chapter3" id="chapter3">
+        <div style="background-color: #fffaf1; padding: 40px 20px; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <h1 style="color: black; margin-bottom: 10px;">Proposta: </h1>
+            <h3 style="color: black; margin-bottom: 20px;">Aproveitar os espaços existentes como escolas, abri-los à população já que se encontram fechadas quase 50% do tempo.</h2>
+            <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/capa_escola_estacoes.png" alt="Espaços Escolas" style="width: 80%; max-height: 50vh; object-fit: contain; box-shadow: none;">
+        </div>
+        <div class="scroll-icon">⬇ Continue a fazer scroll para baixo</div>
+    </div>
+
+    <!-- Escolas Map -->
+    <div class="section" id="escolas-section">
+        <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
+        <div class="legend">
+            <div class="legend-title">Tipo de escolas</div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #18224C;"></div><span>Público</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #D77663;"></div><span>Privado dependente do estado</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Section 7 -->
+    <div class="section" id="section7">
+        <div style="background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 8px; font-size: 1.2em; max-width: 800px; line-height: 1.5; font-weight: 500; text-align: justify; color: #18224C;">
+            As escolas são equipamentos públicos que, contabilizando fins de semana, férias escolares e horários pós-laborais, encontram-se fechados quase metade do ano. Durante esses períodos, estes espaços podem ser utilizados para acolher eventos culturais, reuniões de bairro, mas também criar refúgios climáticos em tempos de calor extremo, aproveitando assim para melhorar os recreios escolares, onde as sombras e contacto com a natureza são frequentemente escassos.
+        </div>
+        <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
+    </div>
+
+    <!-- Section 8 -->
+    <div class="section" id="section8">
+        <div style="background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 8px; font-size: 1.2em; max-width: 800px; line-height: 1.5; font-weight: 500; text-align: justify; color: #18224C;">
+            A implementação desta solução permite otimizar infraestruturas já existentes, melhorando simultaneamente a vida comunitária e ambiental de Lisboa. No entanto é importante referir que apenas serve como medida imediata e urgente, visto ser necessário pensar em garantir que as associações em Lisboa consigam ter e permanecer no seu próprio espaço e ter uma sustentabilidade financeira.
+        </div>
+        <div class="scroll-icon map">⬇ Continue a fazer scroll para baixo</div>
+    </div>
+
+    <!-- Section 9 - Isochrones Map -->
+    <div class="section" id="section9">
+        <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
+        <div class="legend">
+            <div class="legend-title">Distância a pé da escola</div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #9dd999;"></div><span>5 min</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #fcc884;"></div><span>10 min</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #f89892;"></div><span>15 min</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 10 -->
+    <div class="section" id="section10">
+        <div style="background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 8px; font-size: 1.2em; max-width: 800px; line-height: 1.5; font-weight: 500; text-align: justify; color: #18224C;">
+            Com quase 200 escolas públicas ou com apoio público (IPSS) distribuídas por Lisboa, aproximadamente 
+            <strong style="color: #9dd999;">38% da população da cidade vive a menos de 5 minutos a pé</strong> de pelo menos uma escola, enquanto 
+            <strong style="color: #fcc884;">89% reside a 10 minutos de distância</strong>. Essa distribuição demonstra a acessibilidade que estas infraestruturas oferecem à comunidade local e reforça o potencial desta iniciativa em aproveitar essas localizações para abranger praticamente toda a população num espaço de até 15 minutos a pé.
+        </div>
+        <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
+    </div>
+
+
+    <!-- Section 11 with Background -->
+    <div class="section" id="section11">
+        <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
+        <div class="image-container">
+            <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo/images/fases_temporais.png" alt="Fases Temporais">
+        </div>
+        <div class="text-box-container">
+            <!-- Section 12 Content -->
+            <div class="text-box" id="section12">
+                <div>
+                    Criando um novo programa municipal intitulado "Escolas Vivas", podemos transformar os pátios e infraestruturas escolares em centros comunitários multifuncionais. Esta solução tem como base a intermitência no uso do espaço, já que as escolas estão inativas durante grande parte do dia. Este conceito insere-se num novo paradigma de concepção do que é um espaço público quando introduzimos a variável do tempo.
+                </div>
+            </div>
+
+            <!-- Section 13 Content -->
+            <div class="text-box" id="section13">
+                <div>
+                    Podemos propor três possíveis blocos de implementação do projeto. A escola é uma infraestrutura que permanece fechada metade do ano, incluindo férias, fins de semana e feriados. Em média, tem o potencial de estar aberta até mais 9 horas por dia, estando fechada 63 dias ao ano por ser fim de semana e feriados, além de permanecer encerrada durante 78 dias consecutivos nas férias de verão.
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Section 14 with Background -->
+    <div class="section" id="section14">
+        <div class="image-container">
+            <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/tipos_uso.png" alt="Tipos de Uso">
+        </div>
+        <div class="text-box-container">
+            <!-- Section 15 Content -->
+            <div class="text-box" id="section15">
+                <div style="color: #18224C;">
+                    Com esta nova dimensão, vários são os espaços que podemos repensar como espaço público num certo período e horário do dia, sendo as escolas um desses exemplos, mas também as universidades ou museus, entre outros.
+                    <br><br>
+                    Esta utilização dos espaços pode ocorrer de várias formas práticas e imediatas.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blank Section -->
+    <div class="section" id="final" style="background-color: #fffaf1; height: 20vh; margin: 0; padding: 0;"></div>
+
+    <!-- New Background Section (Continuous Text Flow - Part 1) -->
+    <div class="section continuous-text-section" id="background-section-part1">
+        <div class="content-container">
+            <!-- Section 16 -->
+            <div class="text-block" id="section16">
+                <strong>Cantinas comunitárias:</strong> Os refeitórios escolares, que estão fechados fora do horário escolar, podem ser transformados em cantinas comunitárias, especialmente à noite. Geridas por organizações locais, essas cantinas poderiam oferecer refeições a preços justos. Este modelo de gestão cooperativa fortalece a economia solidária, promove o apoio mútuo e ajuda a combater a exclusão social, e pode ainda ajudar a promover hábitos de alimentação mais saudáveis.
+            </div>
+            <!-- Section 17 -->
+            <div class="text-block" id="section17">
+                <strong>Utilização comunitária das cozinhas escolares:</strong> As cozinhas das escolas podem ser transformadas em espaços produtivos, permitindo que cooperativas e pequenos produtores locais as utilizem fora do horário escolar. Nas cooperativas de consumo, como é o caso da Cooperativa Integral Rizoma em Lisboa, alguns dos produtos são produzidos por prossumidores – cooperantes que, além de consumidores, são também pequenos produtores. Para esses prossumidores, a utilização das cozinhas escolares oferece uma oportunidade única de testar os seus negócios e produtos sem os elevados custos iniciais associados ao aluguer de espaços com cozinhas aptas para uma produção comercial. Ao oferecer acesso a cozinhas industriais, esta solução apoia o desenvolvimento de pequenos negócios locais, promovendo a produção sustentável, local e de baixo impacto ecológico, ao mesmo tempo que fomenta a economia cooperativa e solidária.
+            </div>
+        </div>
+    </div>
+
+    <!-- Blank Section -->
+    <div class="section" id="final" style="background-color: #fffaf1; height: 10vh; margin: 0; padding: 0;"></div>
+
+
+
+    <!-- New Background Section (Continuous Text Flow - Part 1) -->
+    <div class="section continuous-text-section" id="background-section-part1">
+        <div class="content-container">
+            <!-- Section 18 -->
+            <div class="text-block" id="section18">
+                <strong>Piscinas comunitárias desmontáveis:</strong> Durante o Verão, as escolas podem disponibilizar pátios para a instalação de piscinas desmontáveis, geridas pela própria comunidade. Esta solução poderia ajudar crianças cujas famílias não têm capacidade de as levar regularmente à praia ou piscinas de lazer, passando assim a ter um espaço seguro para o combate ao calor. Esta auto-organização já acontece em alguns bairros de Lisboa, onde <a href="https://amensagem.pt/2022/08/19/piscinas-plastico-estacionamento-estrada-combater-calor-bairros-sociais-lisboa-picheleira/" target="_blank" style="color: #4fa96a; text-decoration: underline;">vizinhos se juntam para comprar e montar piscinas em lugares de estacionamento para os seus filhos se poderem refrescar em dias quentes</a>. A instalação de piscinas em espaço escolar constitui uma oportunidade de pensá-las numa versão melhorada, com sistemas de renovação de água que evitem o desperdício e garantam condições de saúde adequadas, bem como garantir mais segurança para as crianças e adultos num ambiente mais controlado. O mesmo pode ser feito para os pátios escolares através de intervenções de urbanismo táctico que permita baixar a temperatura ao mesmo tempo que criam recreios mais diversos em termos de atividades para as crianças.
+            </div>
+            <!-- Section 19 -->
+            <div class="text-block" id="section19" style="position: relative;">
+                <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/piscina2.png" alt="Piscinas Comunitárias" style="width: 100%; max-height: 400px; object-fit: cover; margin-bottom: 20px;">
+                <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.8); padding: 5px 10px; font-size: 0.6em; font-weight: bold; color: #333; border-radius: 5px;">
+                    Manuel Banza
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Blank Section -->
+    <div class="section" id="final" style="background-color: #fffaf1; height: 10vh; margin: 0; padding: 0;"></div>
+
+    <!-- New Background Section (Continuous Text Flow - Part 2) -->
+    <div class="section continuous-text-section" id="background-section-part2">
+        <div class="content-container">
+            <!-- Section 20 -->
+            <div class="text-block" id="section20">
+                <strong>Hortas comunitárias:</strong> As escolas podem ceder espaços para hortas comunitárias, geridas por moradores e organizações locais. Estas hortas promovem a sustentabilidade, permitindo que os residentes cultivem os seus alimentos, enquanto fortalecem a educação ambiental e o convívio intergeracional. Podem também surgir projetos para vender os produtos em cooperativas de consumo locais, garantindo um consumo com menor pegada ecológica, tal como a <a href="https://www.instagram.com/cultiva.pt/" target="_blank">cooperativa Rizoma está a fazer na escola Gil Vicente</a>.
+            </div>
+            <!-- Section 21 -->
+            <div class="text-block" id="section21">
+                <strong>Cedência de salas para associações e cooperativas:</strong> Um dos aspetos essenciais desta proposta é a cedência de salas de aula e auditórios para reuniões, assembleias e eventos organizados por associações e cooperativas que, devido ao aumento dos preços de arrendamento em Lisboa, têm cada vez menos capacidade para manter um espaço próprio. A disponibilização de espaços nas escolas permite-lhes continuar a desempenhar o seu papel fundamental sem custos proibitivos, garantindo a continuidade de atividades culturais, sociais e de apoio à comunidade. Além disso, as infraestruturas escolares podem ser partilhadas com organizações desportivas e culturais, permitindo o acesso a novas modalidades e atividades recreativas, como aulas e ensaios de teatro, música e dança. A criação de protocolos de cedência pode garantir que, em troca do espaço, algumas destas atividades sejam gratuitas para pessoas com menos capacidade financeira, promovendo a inclusão.
+            </div>
+            <!-- Section 22 -->
+            <div class="text-block" id="section22">
+                <strong>Assembleias de cidadãos:</strong> As infraestruturas escolares podem ser utilizadas para assembleias de cidadãos, onde a comunidade discute e toma decisões coletivas sobre o bairro. Estas assembleias são essenciais para fortalecer a democracia participativa e garantir que as decisões refletem as necessidades locais, bem como para criar um sentimento de bairrismo e de apoio mútuo entre os vizinhos.
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 23 -->
+    <div class="section" id="section23" style="background-color: #fffaf1; display: flex; justify-content: center; align-items: center; height: 80vh; margin-bottom: -20px;">
+        <h3 style="color: #4fa96a; font-size: 2em; text-align: center;">Da ideia à ação: Como tornar as Escolas Vivas uma realidade?</h3>
+    </div>
+
+    <!-- New Background Section with 3 Blocks -->
+    <div class="section continuous-text-section" id="background-section-3blocks" style="margin-top: -25px;">
+        <div class="content-container">
+
+            <!-- Section 24 -->
+            <div class="text-block" id="section24" style="margin-top: -25px;"> 
+                <strong>Implementação Piloto:</strong> Para garantir uma implementação eficaz e sustentável do programa "Escolas Vivas", poderíamos começar por selecionar uma das 24 freguesias de Lisboa como projeto piloto, que permitirá refinar o modelo antes de o expandir para outras áreas da cidade. Essa freguesia poderia ser escolhida, por exemplo, com base na sua densidade populacional e na escassez de infraestruturas comunitárias, culturais e desportivas. Podendo começar por exemplo pela freguesia de Arroios, que conta com 6 potenciais escolas.
+            </div>
+
+            <!-- Section 25 -->
+            <div class="text-block" id="section25">
+                <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/piloto_arroios.png" alt="Piloto Arroios" style="width: 100%; max-height: 500px; object-fit: cover; margin-bottom: 20px;">
+            </div>
+            
+            <!-- Section 26 -->
+            <div class="text-block" id="section26"style="margin-top: -25px;"> 
+                Apesar do potencial, este programa enfrenta desafios como a falta de experiência administrativa local.
+                Com a descentralização em curso — com municípios assumindo funções do Ministério da Educação — é o momento ideal para avançar. Recomenda-se capacitar os atores locais, definir a governança, criar processos claros de decisão e de monitorização contínua. Promover a colaboração entre cooperativas e escolas para evitar sobrecarga dos serviços municipais.
+            </div>                    
+        </div>
+    </div>
+
+    <!-- Section 27 -->
+    <div class="section" id="section23" style="background-color: #fffaf1; display: flex; justify-content: center; align-items: center; height: 80vh; margin-bottom: -20px;">
+        <h3 style="color: #4fa96a; font-size: 2em; text-align: center;">Conclusão</h3>
+    </div>
+
+    <!-- New Background Section with 2 Blocks -->
+    <div class="section continuous-text-section" id="background-section-2blocks" style="margin-top: -25px;">
+        <div class="content-container">
+
+            <!-- Section 28 -->
+            <div class="text-block" id="section28" style="margin-top: -25px;">
+                <strong>Cidades europeias já implementaram com sucesso ideias semelhantes.</strong> É o caso de Barcelona que abriu no Verão de 2024 mais 38 pátios escolares como refúgios climáticos e tem mais de 200 escolas que foram alvo de melhoria e aumento do espaço pedonal nas ruas em frente às escolas.
+            </div>
+
+            <!-- Section 29 -->
+            <div class="text-block" id="section29" style="margin-top: -25px;">
+                <strong>Em vez de investirmos em novas infraestruturas, estaríamos a reutilizar espaços existentes, otimizando recursos.</strong> A proposta das "Escolas Vivas" não parte do zero, mas sim de práticas que já existem, como a utilização das escolas para eleições políticas, com as quais a maioria de nós já está familiarizada, ou para atividades desportivas pontuais, como treinos em pavilhões escolares. O objetivo é potenciar e expandir essas apropriações, demonstrando que é possível maximizar o uso das infraestruturas. O impacto positivo não se limita ao ambiente: a criação de espaços de convívio pode reforçar a coesão social, reduzir as tensões urbanas e, a longo prazo, até combater fenómenos como a gentrificação, mantendo as associações locais ativas e integradas nos seus bairros. Com a participação ativa dos cidadãos na definição do que cada escola pode dar ao seu bairro, podemos criar uma cidade mais verde, inclusiva e resiliente. Da gentrificação ao efeito de ilha de calor, Lisboa vê-se numa encruzilhada, mas esta é a oportunidade de dar um passo firme em frente, em direção a um futuro mais sustentável e comum.
+            </div>                    
+        </div>
+    </div>
+    
+    <!-- Blank Section -->
+    <div class="section" id="final" style="background-color: #fffaf1; height: 10vh; margin: 0; padding: 0;"></div>
+
+    <!-- Final Block with 3 Sections -->
+    <div class="section continuous-text-section" id="final-block">
+        <div class="content-container">
+
+            <!-- Section 30 -->
+            <div class="text-block" id="section30" style="text-align: justify;">
+                <strong>Este trabalho é um resumo da minha tese de mestrado em Urbanismo Próximo no IAAC - Institute for Advanced Architecture of Catalonia, defendida em Julho de 2024. Se tens interesse em saber mais sobre este projeto, podes consultar a tese final em PDF na imagem abaixo:</strong>
+            </div>
+
+            <!-- Section 31 -->
+            <div class="text-block" id="section31" style="text-align: center; margin-top: 20px;">
+                <a href="https://drive.google.com/file/d/1oUHV3YR07JjyvIKRWh9oFaJtsPw9nk9I/view" target="_blank">
+                    <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo/images/capa_tese.png" alt="Tese Final" style="width: 200px; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+                </a>
+            </div>
+
+            <!-- Section 32 -->
+            <div class="text-block" id="section32" style="text-align: center; margin-top: 20px;">
+                <p><strong>Autor: Manuel Banza</strong></p>
+                <p><a href="https://manuelbanza.github.io/" target="_blank" style="color: #4fa96a; text-decoration: none;">Website: https://manuelbanza.github.io/</a></p>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <style>
+        /* Estilo geral das sections */
+        .section {
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+    
+        /* Estilo da imagem de background */
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Garante que a imagem cobre todo o espaço */
+            z-index: 0;
+        }
+    
+        /* Estilo das caixas de texto */
+        .text-box div {
+            background: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente */
+            border-radius: 8px;
+            max-width: 800px;
+            line-height: 1.8;
+            font-size: 1.2em; /* Tamanho base do texto */
+            padding: 20px;
+            color: #18224C;
+            margin: 20px auto;
+            z-index: 2;
+        }
+    
+        /* Ajustes para telas menores */
+        @media (max-width: 768px) {
+            .text-box div {
+                font-size: 0.9em; /* Reduzir texto para tablets */
+                line-height: 1.5;
+                padding: 15px;
+                max-width: 90%; /* Margem proporcional */
+            }
+        }
+    
+        @media (max-width: 480px) {
+            .text-box div {
+                font-size: 0.6em; /* Texto bem menor para smartphones */
+                line-height: 1.3; /* Reduzir espaçamento entre linhas */
+                padding: 10px;
+                max-width: 85%; /* Margem proporcional */
+            }
+        }
+    </style>
+    
+    
+    
+    
+    
+    
+
+
+
+
+    
+    
+    
+        
+
+
+
+
+
+
+
+
+    <!-- Map -->
+    <div id="map"></div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWFudWVsYmFuemEiLCJhIjoiY2syYzA0NGV0MDcxcTNjbGNlODY4NDR1ZyJ9.SUXHI1TRqNXKr3uPFzgNjQ';
+
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v10',
+            center: [-9.1525946, 38.7331092],
+            zoom: 10.8
+        });
+
+        map.on('load', () => {
+            // Add ICU Layer
+            map.addSource('poi_icu', {
+                type: 'geojson',
+                data: 'http://127.0.0.1:5500/Escolas_Vivas_Interactivo//data/icu.geojson'
+            });
+
+            map.addLayer({
+                id: 'poi_icu',
+                type: 'fill',
+                source: 'poi_icu',
+                paint: {
+                    'fill-color': [
+                        'step',
+                        ['get', 'ICUoc_tar'],
+                        '#FEF0D9', 2.0,
+                        '#FDD49E', 2.5,
+                        '#FDBB84', 3.0,
+                        '#FC8D59', 3.5,
+                        '#E34A33', 4.0,
+                        '#B30000'
+                    ],
+                    'fill-opacity': 0.5
+                }
+            });
+
+            // Add Census Layer
+            map.addSource('poi_censos', {
+                type: 'geojson',
+                data: 'http://127.0.0.1:5500/Escolas_Vivas_Interactivo//data/censos_freg.geojson'
+            });
+
+            map.addLayer({
+                id: 'poi_censos',
+                type: 'fill',
+                source: 'poi_censos',
+                paint: {
+                    'fill-color': [
+                        'step',
+                        ['to-number', ['get', 'green_spaces_per_capita']],
+                        '#B30000', 5,
+                        '#FC8D59', 10,
+                        '#60BD7D'
+                    ],
+                    'fill-opacity': 0.5
+                }
+            });
+
+            // Add Escolas Layer
+            map.addSource('escolas', {
+                type: 'geojson',
+                data: 'http://127.0.0.1:5500/Escolas_Vivas_Interactivo/data/Escolas_Lisboa_Pub_IPSS.geojson'
+            });
+
+            map.addLayer({
+                id: 'escolas',
+                type: 'circle',
+                source: 'escolas',
+                paint: {
+                    'circle-radius': 4,
+                    'circle-color': [
+                        'match',
+                        ['get', 'NATUREZA'],
+                        'Público', '#18224C',
+                        'Privado dependente do estado', '#D77663',
+                        '#CCCCCC'
+                    ],
+                    'circle-stroke-width': 1,
+                    'circle-stroke-color': '#000'
+                }
+            });
+
+            // Add Isochrones Layer
+            map.addSource('isochrones', {
+                type: 'geojson',
+                data: 'http://127.0.0.1:5500/Escolas_Vivas_Interactivo/data/escolas_public_isochrones_split.geojson'
+            });
+
+            map.addLayer({
+                id: 'isochrones',
+                type: 'fill',
+                source: 'isochrones',
+                paint: {
+                    'fill-color': [
+                        'match',
+                        ['get', 'time'],
+                        5, '#9dd999',
+                        10, '#fcc884',
+                        15, '#f89892',
+                        '#cccccc' // Default color for other values
+                    ],
+                    'fill-opacity': 0.6
+                }
+            });
+
+            // Initially set visibility to 'none'
+            map.setLayoutProperty('isochrones', 'visibility', 'none');
+
+
+            map.setLayoutProperty('poi_censos', 'visibility', 'none');
+            map.setLayoutProperty('escolas', 'visibility', 'none');
+        });
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.id === 'section2') {
+                            map.setLayoutProperty('poi_icu', 'visibility', 'visible');
+                            map.setLayoutProperty('poi_censos', 'visibility', 'none');
+                            map.setLayoutProperty('escolas', 'visibility', 'none');
+                            map.setLayoutProperty('isochrones', 'visibility', 'none');
+                        } else if (entry.target.id === 'section3') {
+                            map.setLayoutProperty('poi_icu', 'visibility', 'none');
+                            map.setLayoutProperty('poi_censos', 'visibility', 'visible');
+                            map.setLayoutProperty('escolas', 'visibility', 'none');
+                            map.setLayoutProperty('isochrones', 'visibility', 'none');
+                        } else if (entry.target.id === 'escolas-section') {
+                            map.setLayoutProperty('poi_icu', 'visibility', 'none');
+                            map.setLayoutProperty('poi_censos', 'visibility', 'none');
+                            map.setLayoutProperty('escolas', 'visibility', 'visible');
+                            map.setLayoutProperty('isochrones', 'visibility', 'none');
+                        } else if (entry.target.id === 'section9') {
+                            map.setLayoutProperty('poi_icu', 'visibility', 'none');
+                            map.setLayoutProperty('poi_censos', 'visibility', 'none');
+                            map.setLayoutProperty('escolas', 'visibility', 'none');
+                            map.setLayoutProperty('isochrones', 'visibility', 'visible');
+                        }
+                    }
+                });
+            },
+            {
+                threshold: 0.5, // Adjust to control visibility trigger
+            }
+        );
+
+        // Ensure all sections are observed
+        observer.observe(document.getElementById('section2'));
+        observer.observe(document.getElementById('section3'));
+        observer.observe(document.getElementById('escolas-section'));
+        observer.observe(document.getElementById('section9')); // Add observation for section9
+        observer.observe(document.getElementById('section10')); // Add observation for section10
+
+
+
+    </script>
+</body>
+</html>

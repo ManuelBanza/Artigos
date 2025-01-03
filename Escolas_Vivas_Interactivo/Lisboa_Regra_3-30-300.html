@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<title>Lisboa_Regra_3-30-300</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
+<style>
+	body { margin: 0; padding: 0; }
+	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"/>
+<script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
+
+<style>
+  #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+  }
+  #map-overlay {
+      position: absolute;
+      bottom: 35px;
+      left: 10px;
+      color: black;
+      font-family: Montserrat;
+      font-size: 15px;
+      z-index: 1;
+  }
+  .info-box {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 300px;
+      padding: 10px;
+      background-color: #ffffff80; /* 50% opacity white background */
+      border: 2px solid #E0743B; /* Add border with the specified color */
+      color: black;
+      font-family: Montserrat;
+      font-size: 12.5px;
+  }
+  
+  /* Media query for smaller screens (e.g., mobile) */
+  @media (max-width: 480px) {
+          .info-box {
+              display: none; /* Hide the info-box on smaller screens */
+          }
+      }
+
+  .circle {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  .green-circle {
+    background-color: #60BD7D;
+  }
+
+  .yellow-circle {
+    background-color: #FEDA00;
+  }
+
+  .red-circle {
+    background-color: #EC424A;
+  }
+
+  .grey-circle {
+    background-color: #888888;
+  }
+</style>
+</head>
+<body>
+
+<div id='map'></div>
+
+<div class="info-box">
+  <h2>🌳 Regra 3-30-30</h2>
+  <p>
+    Este mapa ajuda a perceber quais os edifícios que cumprem a regra 3-30-300:
+  </p>
+  <p>
+    - 🌲 3 Árvores possivéis de ver na tua janela de casa
+  </p>
+  <p>
+    - 🟢 30% de cobertura verde na tua freguesia
+  </p>
+  <p>
+    - 🏞️ 300m de um jardim
+  </p>
+</div>
+
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoibWFudWVsYmFuemEiLCJhIjoiY2syYzA0NGV0MDcxcTNjbGNlODY4NDR1ZyJ9.SUXHI1TRqNXKr3uPFzgNjQ';
+  const transformRequest = (url) => {
+    const hasQuery = url.indexOf("?") !== -1;
+    const suffix = hasQuery ? "&pluginName=lunchboxIsochrones" : "?pluginName=lunchboxIsochrones";
+    return {
+      url: url + suffix
+    }
+  }
+  
+  
+  const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [-9.1375946,38.7331092],
+      zoom: 12.1,
+      transformRequest: transformRequest
+  });
+
+  const geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl
+  });
+
+  map.addControl(geocoder, "top-right");
+
+
+
+  map.on("load", () => {
+    // Add source and layer for the isochrone
+    map.addSource("iso", {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [
+        ]
+      }
+    });
+
+
+
+    // Add source and layer for the point data
+    map.addSource("points", {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [
+        ]
+      }
+    });
+
+    map.addLayer({
+      "id": "pointsLayer",
+      "type": "circle",
+      "source": "points",
+      "layout": {},
+      "paint": {
+        "circle-color": "blue",
+      }
+    }, "poi-label");
+
+    // Add source and layer for the selected point data
+    map.addSource("selection", {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [
+        ]
+      }
+    });
+
+    map.addLayer({
+      "id": "selectionLayer",
+      "type": "circle",
+      "source": "selection",
+      "layout": {},
+      "paint": {
+        "circle-color": "purple",
+      }
+    });
+
+
+
+    // Edificios
+    map.addSource('poi_edificios', {
+        type: 'geojson',
+        data: 'http://127.0.0.1:5500/data_sources/data_transformed/buildings_3_30_300.geojson'
+    });
+
+    map.addLayer({
+        'id': 'poi_edificios_polygons',
+        'type': 'fill',
+        'source': 'poi_edificios',
+        'paint': {
+            'fill-color': [
+                'case',
+                ['==', ['get', 'Cumpre_Regra'], 0], '#555B6E',
+                ['==', ['get', 'Cumpre_Regra'], 1], '#059C56',
+                '#555B6E' // Default color
+            ],
+            'fill-opacity': 0.7
+        }
+    });
+
+
+
+    // ICU
+    map.addSource('poi_icu', {
+        type: 'geojson',
+        data: 'http://127.0.0.1:5500/data_sources/data_raw/icu.geojson'
+    });
+
+    map.addLayer({
+        'id': 'poi_icu',
+        'type': 'fill',
+        'source': 'poi_icu',
+        'paint': {
+            'fill-color': [
+                'step',
+                ['get', 'ICUoc_tar'],
+                '#FEF0D9', // 1.5 to 2.0
+                2.0, '#FDD49E', // 2.0 to 2.5
+                2.5, '#FDBB84', // 2.5 to 3.0
+                3.0, '#FC8D59', // 3.0 to 3.5
+                3.5, '#E34A33', // 3.5 to 4.0
+                4.0, '#B30000'  // 4.0 to 4.5
+            ],
+            'fill-opacity': 0.35,
+            'fill-outline-color': 'transparent' // Set the outline color to transparent
+        },
+        'filter': ['>', ['get', 'ICUoc_tar'], 1.5]
+    });
+
+    // Add a legend to the map
+    var legendContainer = document.createElement('div');
+    legendContainer.className = 'mapboxgl-ctrl';
+    legendContainer.style.padding = '10px';
+    legendContainer.style.fontFamily = 'Montserrat';
+    legendContainer.style.fontSize = '12px';
+    legendContainer.style.position = 'absolute';
+    legendContainer.style.bottom = '10px';
+    legendContainer.style.right = '10px';
+    legendContainer.innerHTML = `
+      <div style="text-align: center; margin-bottom: 5px;">Edifício 3-30-300</div>
+      <div style="display: flex; align-items: center;">
+        <div style="width: 15px; height: 15px; background-color: #4AB482;"></div>
+        <div style="margin-left: 5px;">Cumpre</div>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <div style="width: 15px; height: 15px; background-color: #828793;"></div>
+        <div style="margin-left: 5px;">Não Cumpre</div>
+      </div>
+      <div style="text-align: center; margin-bottom: 5px;">ICU</div>
+      <div style="display: flex; align-items: center;">
+        <div style="width: 15px; height: 15px; background-color: #FEF0D9;"></div>
+        <div style="width: 15px; height: 15px; background-color: #FDD49E;"></div>
+        <div style="width: 15px; height: 15px; background-color: #FDBB84;"></div>
+        <div style="width: 15px; height: 15px; background-color: #FC8D59;"></div>
+        <div style="width: 15px; height: 15px; background-color: #E34A33;"></div>
+        <div style="width: 15px; height: 15px; background-color: #B30000;"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+        <div>1.5</div>
+        <div>   </div>
+        <div>   </div>
+        <div>   </div>
+        <div>   </div>
+        <div>4.5</div>
+      </div>
+    `;
+
+    map.getContainer().appendChild(legendContainer);
+
+
+  // BIPZIP
+  map.addSource('poi_bipzip', {
+      type: 'geojson',
+      data: 'http://127.0.0.1:5500/data_sources/data_raw/Limites_BIPZIP.geojson'
+  });
+
+  map.addLayer({
+      'id': 'poi_bipzip',
+      'type': 'line', // Change the layer type to 'line' for stroke
+      'source': 'poi_bipzip',
+      'paint': {
+          'line-color': '#6b00b3', // Set the stroke color
+          'line-width': 2 // Set the stroke width to a higher value, e.g., 4
+      }
+  });
+
+
+    
+
+  // Create a popup object
+  var popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false
+  });
+
+  // Function to get the font color based on the value
+  function getFontColor(value) {
+      return value === 'Sim' ? '#60BD7D' : '#EC424A';
+  }
+
+  // Add a mousemove and click event listener to the 'poi_edificios_polygons' layer
+  map.on('mousemove', 'poi_edificios_polygons', handlePopup);
+  map.on('click', 'poi_edificios_polygons', handlePopup);
+
+  function handlePopup(e) {
+      var feature = e.features[0];
+      var cumpreRegra = feature.properties.Cumpre_Regra === 0 ? 'Não' : 'Sim';
+      var nArvores30m = feature.properties.N_Arvores_30m;
+      var treeCoverPercentage = feature.properties.Tree_Cover_Percentage;
+      var jardim300m = feature.properties.Jardim_a_300m === 0 ? 'Não' : 'Sim';
+      var jardim = feature.properties.Name;
+
+      var popupContent = '<div style="background-color: #F7E5AB; font-size: 13px; padding: 10px; font-family: Montserrat; border: none;">';
+      popupContent += '<strong>Cumpre Regra:</strong> <span style="color: ' + getFontColor(cumpreRegra) + '; font-weight: bold;">' + cumpreRegra + '</span><br>';
+      popupContent += '<strong>· Nº de Árvores:</strong> ' + nArvores30m + '<br>';
+      popupContent += '<strong>· % Cobertura Verde:</strong> ' + treeCoverPercentage + '%<br>';
+      popupContent += '<strong>· Espaço Verde a 300m:</strong> ' + jardim300m + '<br>';
+      popupContent += '(' + jardim + ')' + '<br>';
+      popupContent += '</div>';
+
+      popup.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
+  }
+
+  // Add a mouseleave event listener to the 'poi_edificios_polygons' layer
+  map.on('mouseleave', 'poi_edificios_polygons', function() {
+      popup.remove();
+  });
+
+
+
+
+
+
+
+
+
+   
+    
+
+// Create a custom control to toggle the 'loja_cidadao' layer visibility
+class EdificiosToggleControl {
+    onAdd(map) {
+        // Create a container element for the control
+        this.container = document.createElement('div');
+        this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+
+        // Create a checkbox element to toggle the layer visibility
+        this.checkbox = document.createElement('input');
+        this.checkbox.type = 'checkbox';
+        this.checkbox.id = 'edificios_toggle';
+        this.checkbox.checked = true;
+        this.container.appendChild(this.checkbox);
+
+        // Create a label for the checkbox
+        const label = document.createElement('label');
+        label.htmlFor = 'edificios_toggle';
+        label.textContent = 'Edifícios';
+        this.container.appendChild(label);
+
+        // Add event listener to the checkbox
+        this.checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                // Show the 'poi_saude' layer
+                map.setLayoutProperty('poi_edificios_polygons', 'visibility', 'visible');
+            } else {
+                // Hide the 'poi_saude' layer
+                map.setLayoutProperty('poi_edificios_polygons', 'visibility', 'none');
+            }
+        });
+
+        return this.container;
+    }
+
+    onRemove() {
+        this.container.parentNode.removeChild(this.container);
+        this.map = undefined;
+    }
+}
+
+// Add the custom control to the map
+map.addControl(new EdificiosToggleControl(), 'top-right');
+
+
+
+
+// Create a custom control to toggle the 'loja_cidadao' layer visibility
+class ICUToggleControl {
+    onAdd(map) {
+        // Create a container element for the control
+        this.container = document.createElement('div');
+        this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+
+        // Create a checkbox element to toggle the layer visibility
+        this.checkbox = document.createElement('input');
+        this.checkbox.type = 'checkbox';
+        this.checkbox.id = 'edificios_toggle';
+        this.checkbox.checked = true;
+        this.container.appendChild(this.checkbox);
+
+        // Create a label for the checkbox
+        const label = document.createElement('label');
+        label.htmlFor = 'edificios_toggle';
+        label.textContent = 'Ilha de Calor Urbano (ICU)';
+        this.container.appendChild(label);
+
+        // Add event listener to the checkbox
+        this.checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                // Show the 'poi_saude' layer
+                map.setLayoutProperty('poi_icu', 'visibility', 'visible');
+            } else {
+                // Hide the 'poi_saude' layer
+                map.setLayoutProperty('poi_icu', 'visibility', 'none');
+            }
+        });
+
+        return this.container;
+    }
+
+    onRemove() {
+        this.container.parentNode.removeChild(this.container);
+        this.map = undefined;
+    }
+}
+
+// Add the custom control to the map
+map.addControl(new ICUToggleControl(), 'top-right');
+
+
+// Create a custom control to toggle the 'loja_cidadao' layer visibility
+class BIPZIPToggleControl {
+    onAdd(map) {
+        // Create a container element for the control
+        this.container = document.createElement('div');
+        this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+
+        // Create a checkbox element to toggle the layer visibility
+        this.checkbox = document.createElement('input');
+        this.checkbox.type = 'checkbox';
+        this.checkbox.id = 'bipzip_toggle'; // Change the ID to 'bipzip_toggle'
+        this.container.appendChild(this.checkbox);
+
+        // Create a label for the checkbox
+        const label = document.createElement('label');
+        label.htmlFor = 'bipzip_toggle'; // Change the ID to 'bipzip_toggle'
+        label.textContent = 'Limites BIPZIP';
+        this.container.appendChild(label);
+
+        // Add event listener to the checkbox
+        this.checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                // Show the 'poi_bipzip' layer
+                map.setLayoutProperty('poi_bipzip', 'visibility', 'visible');
+            } else {
+                // Hide the 'poi_bipzip' layer
+                map.setLayoutProperty('poi_bipzip', 'visibility', 'none');
+            }
+        });
+
+        // Initially hide the 'poi_bipzip' layer
+        map.setLayoutProperty('poi_bipzip', 'visibility', 'none');
+
+        return this.container;
+    }
+
+    onRemove() {
+        this.container.parentNode.removeChild(this.container);
+        this.map = undefined;
+    }
+}
+
+// Add the custom control to the map
+map.addControl(new BIPZIPToggleControl(), 'top-right');
+
+
+
+
+  });
+</script>
+
+</body>
+</html>
