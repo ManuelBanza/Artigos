@@ -277,21 +277,23 @@
             }
         }
 
-        /* Mobile-specific fix for ALL text boxes */
+        /* Mobile-specific fix for problematic sections */
         @media (max-width: 480px) {
-            .text-box div,
-            .yellow-section div,
-            .section div {
-                text-align: start;
-                hyphens: auto;
-                word-break: break-word;
-                overflow-wrap: break-word;
-                line-height: 1.6;
-                font-size: 1em;
-                margin: 0 auto;
-                padding: 10px;
+            #section5 div,
+            #section7 div,
+            #section8 div,
+            #section10 div {
+                text-align: start; /* Align to the natural flow of text */
+                hyphens: auto; /* Enable hyphenation for better line breaks */
+                word-break: break-word; /* Avoid long words breaking layout */
+                overflow-wrap: break-word; /* Ensure text wraps properly */
+                line-height: 1.6; /* Slightly increase line spacing for readability */
+                font-size: 1em; /* Maintain a readable font size */
+                margin: 0 auto; /* Center the content */
+                padding: 10px; /* Add consistent padding for aesthetics */
             }
         }
+
 
 
 
