@@ -13,6 +13,44 @@
             font-family: 'Montserrat', sans-serif;
         }
 
+
+
+        .banner-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            z-index: 1000; /* Ensure it is above other content */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for clarity */
+        }
+
+        .banner-image {
+            width: 80%;
+            max-width: 600px;
+            height: auto;
+            cursor: pointer; /* Change cursor to indicate clickable */
+        }
+
+        /* Responsive Design for Mobile */
+        @media (max-width: 768px) {
+            .banner-image {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner-image {
+                width: 100%;
+            }
+        }
+
+
+
         .author-photo {
             width: 50px; /* Adjust the size as needed */
             height: 50px;
@@ -316,10 +354,20 @@
     </style>
 </head>
 <body>
-    <!-- Chapter 1 -->
-    <div class="chapter chapter1" id="chapter1">
+<!-- Chapter 1 -->
+    <div class="chapter chapter1" id="chapter1" style="padding-top: 80px;"> <!-- Add padding to avoid content being hidden behind the fixed banner -->
+        <!-- Fixed White Banner with Clickable Image -->
+        <div class="banner-container">
+            <a href="https://amensagem.pt/" target="_blank">
+                <img src="https://i0.wp.com/amensagem.pt/wp-content/uploads/2021/01/cropped-cropped-a-mensagem-logo-scaled-1.jpg?resize=2048%2C399&quality=89&ssl=1" 
+                    alt="A Mensagem Logo" class="banner-image">
+            </a>
+        </div>
+
         <h1>Escolas Vivas</h1>
         <h2>De espaços escolares a Centros Urbanos Multifuncionais de Lisboa</h2>
+
+
         <img src="https://manuelbanza.github.io/assets/img/manuel_foto.jpg" alt="Manuel Banza"
             class="author-photo">
         <p>Manuel Banza</p>
@@ -761,7 +809,7 @@
         const map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/light-v10',
-            center: [-9.1525946, 38.72],
+            center: [-9.1525946, 38.75],
             zoom: 10.8
         });
 

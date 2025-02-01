@@ -28,6 +28,41 @@
             font-family: 'Montserrat', sans-serif;
         }
 
+
+        .banner-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            z-index: 1000; /* Ensure it is above other content */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for clarity */
+        }
+
+        .banner-image {
+            width: 80%;
+            max-width: 600px;
+            height: auto;
+            cursor: pointer; /* Change cursor to indicate clickable */
+        }
+
+        /* Responsive Design for Mobile */
+        @media (max-width: 768px) {
+            .banner-image {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner-image {
+                width: 100%;
+            }
+        }
+
         .author-photo {
             width: 50px; /* Adjust the size as needed */
             height: 50px;
@@ -329,8 +364,16 @@
     </style>
 </head>
 <body>
-    <!-- Chapter 1 -->
-    <div class="chapter chapter1" id="chapter1">
+<!-- Chapter 1 -->
+    <div class="chapter chapter1" id="chapter1" style="padding-top: 80px;"> <!-- Add padding to avoid content being hidden behind the fixed banner -->
+        <!-- Fixed White Banner with Clickable Image -->
+        <div class="banner-container">
+            <a href="https://amensagem.pt/" target="_blank">
+                <img src="https://i0.wp.com/amensagem.pt/wp-content/uploads/2021/01/cropped-cropped-a-mensagem-logo-scaled-1.jpg?resize=2048%2C399&quality=89&ssl=1" 
+                    alt="A Mensagem Logo" class="banner-image">
+            </a>
+        </div>
+
         <h1>Escolas Vivas</h1>
         <h2>De espaços escolares a Centros Urbanos Multifuncionais de Lisboa</h2>
         <img src="https://manuelbanza.github.io/assets/img/manuel_foto.jpg" alt="Manuel Banza"
@@ -570,7 +613,7 @@
         <div class="content-container">
             <!-- Section 18 -->
             <div class="text-block" id="section18">
-                <strong>Piscinas comunitárias desmontáveis:</strong> Durante o Verão, as escolas podem disponibilizar pátios para a instalação de piscinas desmontáveis, geridas pela própria comunidade. Esta solução poderia ajudar crianças cujas famílias não têm capacidade de as levar regularmente à praia ou piscinas de lazer, passando assim a ter um espaço seguro para o combate ao calor. <a href="https://amensagem.pt/2022/08/19/piscinas-plastico-estacionamento-estrada-combater-calor-bairros-sociais-lisboa-picheleira/" target="_blank" style="color: #4fa96a; text-decoration: underline;">Esta auto-organização já acontece em alguns bairros de Lisboa</a>. A instalação de piscinas constitui uma oportunidade de pensá-las numa versão melhorada, reforçando as com condições de segurança e saúde.
+                <strong>Piscinas comunitárias desmontáveis:</strong> Durante o Verão, as escolas podem disponibilizar pátios para a instalação de piscinas desmontáveis, geridas pela própria comunidade. Esta solução poderia ajudar crianças cujas famílias não têm capacidade de as levar regularmente à praia ou piscinas de lazer, passando assim a ter um espaço seguro para o combate ao calor. Esta auto-organização já acontece em alguns bairros de Lisboa, onde <a href="https://amensagem.pt/2022/08/19/piscinas-plastico-estacionamento-estrada-combater-calor-bairros-sociais-lisboa-picheleira/" target="_blank" style="color: #4fa96a; text-decoration: underline;">vizinhos se juntam para comprar e montar piscinas em lugares de estacionamento para os seus filhos se poderem refrescar em dias quentes</a>. A instalação de piscinas em espaço escolar constitui uma oportunidade de pensá-las numa versão melhorada, com sistemas de renovação de água que evitem o desperdício e garantam condições de saúde adequadas, bem como garantir mais segurança para as crianças e adultos num ambiente mais controlado.
             </div>
             <!-- Section 19 -->
             <div class="text-block" id="section19" style="position: relative;">
@@ -778,7 +821,7 @@
         const map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/light-v10',
-            center: [-9.1525946, 38.70],
+            center: [-9.1525946, 38.75],
             zoom: 10.8
         });
 
