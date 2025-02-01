@@ -7,21 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0.css" rel="stylesheet" />
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Lisboa: Escolas Vivas" />
-    <meta property="og:description" content="De espaços escolares a Centros Urbanos Multifuncionais de Lisboa" />
-    <meta property="og:image" content="https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo//images/thumbnail2.png" />
-    <meta property="og:url" content="https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo/Artigo_Escolas_Vivas.html" />
-    <meta property="og:type" content="website" />
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Lisboa: Escolas Vivas" />
-    <meta name="twitter:description" content="De espaços escolares a Centros Urbanos Multifuncionais de Lisboa" />
-    <meta name="twitter:image" content="https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo//images/thumbnail2.png" />
-
-
     <style>
         body {
             margin: 0;
@@ -38,6 +23,7 @@
             border: 1px solid white; /* Optional: adds a border */
         }
 
+        
         #map {
             position: fixed;
             top: 0;
@@ -57,6 +43,8 @@
             text-align: center;
             padding: 20px;
         }
+
+    
         .chapter {
             color: white;
         }
@@ -305,10 +293,7 @@
 
         /* Mobile-specific fix for problematic sections */
         @media (max-width: 480px) {
-            #section2 div,
-            #section4 div,
             #section5 div,
-            #section6 div,
             #section7 div,
             #section8 div,
             #section10 div {
@@ -326,6 +311,8 @@
 
 
 
+
+
     </style>
 </head>
 <body>
@@ -336,18 +323,18 @@
         <img src="https://manuelbanza.github.io/assets/img/manuel_foto.jpg" alt="Manuel Banza"
             class="author-photo">
         <p>Manuel Banza</p>
-        <p>
-            (<a href="https://manuelbanza-github-io.translate.goog/Artigos/Escolas_Vivas_Interactivo/Artigo_Escolas_Vivas.html?_x_tr_sl=pt-PT&_x_tr_tl=en&_x_tr_hl=pt-PT&_x_tr_pto=wapp" target="_blank" style="color: white; text-decoration: underline;">For English click here</a>)
-        </p>
+        <p>(For english click here)</p>
         <div class="scroll-icon">⬇ Continue a fazer scroll para baixo</div>
-    </div>    
-    
+    </div>
+
     <!-- Chapter 1.5 -->
     <div class="chapter chapter3" id="final-block" style="background-color: #fffaf1; color: black; padding: 40px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
         <h2 style="margin-bottom: 20px;">O potencial das escolas vai além do ensino: podem tornar-se espaços de convívio, apoio comunitário e resposta aos desafios urbanos.</h2>
         <div class="scroll-icon" style="color: black;">⬇ continue a fazer scroll para baixo</div>
     </div>
-    
+
+
+
     <!-- Section 1 -->
     <div class="section" id="section1">
         <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
@@ -387,7 +374,7 @@
     <div class="section" id="section3">
         <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
         <div class="legend">
-            <div class="legend-title">m2 de área verde per capita por freguesia</div>
+            <div class="legend-title">10m2 per capita por freguesia</div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: #B30000;"></div><span>0 - 5</span>
             </div>
@@ -410,7 +397,7 @@
 
     <!-- Section 5 -->
     <div class="yellow-section" id="section5">
-        <img src="https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo//images/gentrificacao.png" alt="Gentrificação">
+        <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/gentrificacao.png" alt="Gentrificação">
         <div style="color: black; font-size: 1.2em; max-width: 800px; line-height: 1.5; font-weight: 500; text-align: justify; margin-top: 20px;">
             Segundo a Confederação Portuguesa de Coletividades de Cultura, Recreio e Desporto, mais de 20% dos coletivos desapareceram em Lisboa nos últimos 24 anos, pressionados pela gentrificação, o turismo e o aumento das rendas, que dificultam a manutenção ou obtenção de novos espaços.
         </div>
@@ -419,7 +406,7 @@
 
     <!-- Section 6 -->
     <div class="yellow-section" id="section6">
-        <img src="https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo//images/mensagem_sirigaita.png" alt="Mensagem Sirigaita">
+        <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/mensagem_sirigaita.png" alt="Mensagem Sirigaita">
         <div style="color: black; font-size: 1.2em; max-width: 800px; line-height: 1.5; font-weight: 500; text-align: justify; margin-top: 20px;">
             Coletivos como a Sirigaita e a Zona Franca dos Anjos que já receberem ordem de despejo resistem, promovendo eventos culturais e ações políticas.
         </div>
@@ -439,7 +426,7 @@
         <div style="background-color: #fffaf1; padding: 40px 20px; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
             <h1 style="color: black; margin-bottom: 10px;">Proposta: </h1>
             <h3 style="color: black; margin-bottom: 20px;">Aproveitar os espaços existentes como escolas, abri-los à população já que se encontram fechadas quase 50% do tempo.</h2>
-            <img src="https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo//images/capa_escola_estacoes.png" alt="Espaços Escolas" style="width: 80%; max-height: 50vh; object-fit: contain; box-shadow: none;">
+            <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/capa_escola_estacoes.png" alt="Espaços Escolas" style="width: 80%; max-height: 50vh; object-fit: contain; box-shadow: none;">
         </div>
         <div class="scroll-icon">⬇ Continue a fazer scroll para baixo</div>
     </div>
@@ -506,7 +493,7 @@
     <div class="section" id="section11">
         <div class="scroll-icon map" style="color: black;">⬇ Continue a fazer scroll para baixo</div>
         <div class="image-container">
-            <img src="https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo/images/fases_temporais.png" alt="Fases Temporais">
+            <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo/images/fases_temporais.png" alt="Fases Temporais">
         </div>
         <div class="text-box-container">
             <!-- Section 12 Content -->
@@ -519,7 +506,7 @@
             <!-- Section 13 Content -->
             <div class="text-box" id="section13">
                 <div>
-                    Podemos propor três possíveis blocos de implementação do projeto. A escola é uma infraestrutura que permanece fechada metade do ano, incluindo férias, fins de semana e feriados. Em média, tem o potencial de estar aberta até mais 9 horas por dia, estando fechada por volta de 63 dias ao ano por ser fim de semana e feriados, além de permanecer encerrada até 78 dias consecutivos nas férias de verão.
+                    Podemos propor três possíveis blocos de implementação do projeto. A escola é uma infraestrutura que permanece fechada metade do ano, incluindo férias, fins de semana e feriados. Em média, tem o potencial de estar aberta até mais 9 horas por dia, estando fechada 63 dias ao ano por ser fim de semana e feriados, além de permanecer encerrada durante 78 dias consecutivos nas férias de verão.
                 </div>
             </div>
         </div>
@@ -529,7 +516,7 @@
     <!-- Section 14 with Background -->
     <div class="section" id="section14">
         <div class="image-container">
-            <img src="https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo//images/tipos_uso.png" alt="Tipos de Uso">
+            <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/tipos_uso.png" alt="Tipos de Uso">
         </div>
         <div class="text-box-container">
             <!-- Section 15 Content -->
@@ -543,8 +530,7 @@
         </div>
     </div>
 
-    <!-- Blank Section -->
-    <div class="section" id="final" style="background-color: #fffaf1; height: 20vh; margin: 0; padding: 0;"></div>
+
 
     <!-- New Background Section (Continuous Text Flow - Part 1) -->
     <div class="section continuous-text-section" id="background-section-part1">
@@ -570,7 +556,7 @@
         <div class="content-container">
             <!-- Section 18 -->
             <div class="text-block" id="section18">
-                <strong>Piscinas comunitárias desmontáveis:</strong> Durante o Verão, as escolas podem disponibilizar pátios para a instalação de piscinas desmontáveis, geridas pela própria comunidade. Esta solução poderia ajudar crianças cujas famílias não têm capacidade de as levar regularmente à praia ou piscinas de lazer, passando assim a ter um espaço seguro para o combate ao calor. <a href="https://amensagem.pt/2022/08/19/piscinas-plastico-estacionamento-estrada-combater-calor-bairros-sociais-lisboa-picheleira/" target="_blank" style="color: #4fa96a; text-decoration: underline;">Esta auto-organização já acontece em alguns bairros de Lisboa</a>. A instalação de piscinas constitui uma oportunidade de pensá-las numa versão melhorada, reforçando as com condições de segurança e saúde.
+                <strong>Piscinas comunitárias desmontáveis:</strong> Durante o Verão, as escolas podem disponibilizar pátios para a instalação de piscinas desmontáveis, geridas pela própria comunidade. Esta solução poderia ajudar crianças cujas famílias não têm capacidade de as levar regularmente à praia ou piscinas de lazer, passando assim a ter um espaço seguro para o combate ao calor. <a href="https://amensagem.pt/2022/08/19/piscinas-plastico-estacionamento-estrada-combater-calor-bairros-sociais-lisboa-picheleira/" target="_blank" style="color: #4fa96a; text-decoration: underline;">Esta auto-organização já acontece em alguns bairros de Lisboa</a>. A instalação de piscinas constitui uma oportunidade de pensá-las numa versão melhorada, reforçando as condições de segurança e saúde.
             </div>
             <!-- Section 19 -->
             <div class="text-block" id="section19" style="position: relative;">
@@ -587,8 +573,6 @@
     <!-- Blank Section -->
     <div class="section" id="final" style="background-color: #fffaf1; height: 10vh; margin: 0; padding: 0;"></div>
 
-    
-
     <!-- New Background Section (Continuous Text Flow - Part 2) -->
     <div class="section continuous-text-section" id="background-section-part2">
         <div class="content-container">
@@ -598,24 +582,15 @@
             </div>
             <!-- Section 21 -->
             <div class="text-block" id="section21">
-                <strong>Cedência de salas para associações e cooperativas:</strong> Um dos aspetos essenciais desta proposta é a cedência de salas de aula e auditórios para reuniões, assembleias e eventos organizados por associações e cooperativas que, devido ao aumento dos preços de arrendamento em Lisboa, têm cada vez menos capacidade para manter um espaço próprio. A disponibilização de espaços nas escolas permite-lhes continuar a desempenhar o seu papel fundamental sem custos proibitivos, garantindo a continuidade de atividades culturais, sociais e de apoio à comunidade. Além disso, as infraestruturas escolares podem ser partilhadas com organizações desportivas e culturais, permitindo o acesso a novas modalidades e atividades recreativas, como aulas e ensaios de teatro, música e dança. A criação de protocolos de cedência pode garantir que, em troca do espaço, algumas destas atividades sejam gratuitas para pessoas com menos capacidade financeira, promovendo a inclusão.
+                <strong>Cedência de salas para associações e cooperativas:</strong> Um dos aspetos essenciais desta proposta é a cedência de salas de aula e auditórios para reuniões, assembleias e eventos organizados por associações e cooperativas que, devido ao aumento dos preços de arrendamento em Lisboa, têm cada vez menos capacidade para manter um espaço próprio. A disponibilização de espaços nas escolas permite-lhes continuar a desempenhar o seu papel fundamental sem custos proibitivos, garantindo a continuidade de atividades culturais, sociais e de apoio à comunidade. Além disso, as infraestruturas escolares podem ser partilhadas com organizações desportivas e culturais, permitindo o acesso a novas modalidades e atividades recreativas, como aulas e ensaios de teatro, música e dança.
             </div>
 
-            <!-- Blank Section -->
-            <div class="section" id="final" style="background-color: #fffaf1; height: 10vh; margin: 0; padding: 0;"></div>
-
-            <!-- Blank Section -->
-            <div class="section" id="final" style="background-color: #fffaf1; height: 10vh; margin: 0; padding: 0;"></div>
-            
             <!-- Section 22 -->
             <div class="text-block" id="section22">
                 <strong>Assembleias de cidadãos:</strong> As infraestruturas escolares podem ser utilizadas para assembleias de cidadãos, onde a comunidade discute e toma decisões coletivas sobre o bairro. Estas assembleias são essenciais para fortalecer a democracia participativa e garantir que as decisões refletem as necessidades locais, bem como para criar um sentimento de bairrismo e de apoio mútuo entre os vizinhos.
             </div>
         </div>
     </div>
-
-    <!-- Blank Section -->
-    <div class="section" id="final" style="background-color: #fffaf1; height: 10vh; margin: 0; padding: 0;"></div>
 
     <!-- Section 23 -->
     <div class="section" id="section23" style="background-color: #fffaf1; display: flex; justify-content: center; align-items: center; height: 80vh; margin-bottom: -20px;">
@@ -633,7 +608,7 @@
 
             <!-- Section 25 -->
             <div class="text-block" id="section25">
-                <img src="https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo//images/piloto_arroios.png" alt="Piloto Arroios" style="width: 100%; max-height: 500px; object-fit: cover; margin-bottom: 20px;">
+                <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo//images/piloto_arroios.png" alt="Piloto Arroios" style="width: 100%; max-height: 500px; object-fit: cover; margin-bottom: 20px;">
             </div>
             
             <!-- Section 26 -->
@@ -644,10 +619,11 @@
         </div>
     </div>
 
-    <!-- Section 27 -->
-    <div class="section" id="section23" style="background-color: #fffaf1; display: flex; justify-content: center; align-items: center; height: 80vh; margin-bottom: -20px;">
-        <hr style="width: 30%; border: none; border-top: 2px solid #4fa96a; margin: 0 auto;" />
-    </div>
+        <!-- Section 27 -->
+        <div class="section" id="section23" style="background-color: #fffaf1; display: flex; justify-content: center; align-items: center; height: 80vh; margin-bottom: -20px;">
+            <hr style="width: 30%; border: none; border-top: 2px solid #4fa96a; margin: 0 auto;" />
+        </div>
+
 
     <!-- New Background Section with 2 Blocks -->
     <div class="section continuous-text-section" id="background-section-2blocks" style="margin-top: -25px;">
@@ -680,7 +656,7 @@
             <!-- Section 31 -->
             <div class="text-block" id="section31" style="margin-top: 20px;">
                 <a href="https://drive.google.com/file/d/1oUHV3YR07JjyvIKRWh9oFaJtsPw9nk9I/view" target="_blank">
-                    <img src="https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo//images/capa_tese.png" 
+                    <img src="http://127.0.0.1:5500/Escolas_Vivas_Interactivo/images/capa_tese.png" 
                         alt="Tese Final" 
                         style="width: 200px; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
                 </a>
@@ -698,6 +674,7 @@
 
         </div>
     </div>
+
 
 
 
@@ -792,7 +769,7 @@
             // Add ICU Layer
             map.addSource('poi_icu', {
                 type: 'geojson',
-                data: 'https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo//data/icu.geojson'
+                data: 'http://127.0.0.1:5500/Escolas_Vivas_Interactivo//data/icu.geojson'
             });
 
             map.addLayer({
@@ -817,7 +794,7 @@
             // Add Census Layer
             map.addSource('poi_censos', {
                 type: 'geojson',
-                data: 'https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo//data/censos_freg.geojson'
+                data: 'http://127.0.0.1:5500/Escolas_Vivas_Interactivo//data/censos_freg.geojson'
             });
 
             map.addLayer({
@@ -839,7 +816,7 @@
             // Add Escolas Layer
             map.addSource('escolas', {
                 type: 'geojson',
-                data: 'https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo/data/Escolas_Lisboa_Pub_IPSS.geojson'
+                data: 'http://127.0.0.1:5500/Escolas_Vivas_Interactivo/data/Escolas_Lisboa_Pub_IPSS.geojson'
             });
 
             map.addLayer({
@@ -863,7 +840,7 @@
             // Add Isochrones Layer
             map.addSource('isochrones', {
                 type: 'geojson',
-                data: 'https://manuelbanza.github.io/Artigos/Escolas_Vivas_Interactivo/data/escolas_public_isochrones_split.geojson'
+                data: 'http://127.0.0.1:5500/Escolas_Vivas_Interactivo/data/escolas_public_isochrones_split.geojson'
             });
 
             map.addLayer({
