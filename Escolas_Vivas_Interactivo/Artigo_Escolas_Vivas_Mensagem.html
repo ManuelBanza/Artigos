@@ -299,24 +299,11 @@
             text-align: justify; /* Keep the text aligned properly */
         }
 
-        #section19 img {
-            display: block;
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            max-height: 400px;
-            object-fit: cover;
-            margin: 40px auto; /* Adds space before and after */
-        }
-
-
         .continuous-text-section {
             background-color: #fffaf1;
-            padding: 60px 20px; /* Increased padding to prevent overlap */
-            margin-top: 40px; /* Extra margin to ensure spacing */
-            min-height: 100vh; /* Ensures each section has enough space */
+            padding: 40px 20px;
+            margin: 0;
         }
-
 
         .content-container {
             max-width: 800px;
@@ -328,9 +315,8 @@
         }
 
         .text-block {
-            margin-bottom: 40px; /* Increased spacing between text blocks */
+            margin-bottom: 20px; /* Space between paragraphs */
         }
-
 
         @media (max-width: 768px) {
             .content-container {
@@ -347,7 +333,9 @@
                 padding: 10px;
             }
 
-
+            .text-block {
+                margin-bottom: 15px; /* Adjust spacing for smaller screens */
+            }
         }
 
         /* Mobile-specific fix for problematic sections */
@@ -370,24 +358,6 @@
             }
         }
 
-        #background-section-part1,
-        #background-section-part2 {
-            margin-bottom: 60px; /* Forces space between the sections */
-        }
-
-        @media (max-width: 768px) {
-            .continuous-text-section {
-                padding: 80px 20px; /* More padding for smaller screens */
-            }
-
-            .text-block {
-                margin-bottom: 50px; /* Forces spacing */
-            }
-
-            #section19 img {
-                margin: 50px auto; /* Extra margin for image */
-            }
-        }
 
 
 
@@ -782,23 +752,14 @@
     
         /* Estilo da imagem de background */
         .image-container img {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain; /* Ensure full image is visible */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Garante que a imagem cobre todo o espaço */
+            z-index: 0;
         }
-
-        .text-box {
-            position: relative;
-            z-index: 10;
-        }
-        .image-container {
-            position: relative;
-            z-index: 5;
-        }
-
-
     
         /* Estilo das caixas de texto */
         .text-box div {
@@ -831,18 +792,6 @@
                 max-width: 85%; /* Margem proporcional */
             }
         }
-
-        @media (max-width: 768px) {
-            .image-container {
-                position: relative !important; /* Override sticky positioning */
-            }
-
-            .text-box-container {
-                margin-top: 20px; /* Add extra space between text and images */
-            }
-        }
-
-
     </style>
     
     
