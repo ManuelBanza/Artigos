@@ -292,9 +292,14 @@
 
         .continuous-text-section {
             background-color: #fffaf1;
-            padding: 40px 20px;
-            margin: 0;
+            padding: 60px 20px; /* More padding to avoid overlap */
+            margin: 0 auto;
+            min-height: 100vh; /* Ensures each section has enough height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
         }
+
 
         .content-container {
             max-width: 800px;
@@ -306,7 +311,7 @@
         }
 
         .text-block {
-            margin-bottom: 20px; /* Space between paragraphs */
+            margin-bottom: 60px; /* Space between paragraphs */
         }
 
         @media (max-width: 768px) {
@@ -325,7 +330,7 @@
             }
 
             .text-block {
-                margin-bottom: 15px; /* Adjust spacing for smaller screens */
+                margin-bottom: 60px; /* Adjust spacing for smaller screens */
             }
         }
 

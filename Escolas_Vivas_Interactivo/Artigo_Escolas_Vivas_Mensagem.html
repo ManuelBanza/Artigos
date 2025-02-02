@@ -359,6 +359,77 @@
         }
 
 
+        /* General styles for sections */
+        .section {
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .continuous-text-section {
+            background-color: #fffaf1;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-size: 1.2em;
+            color: #18224C;
+            text-align: justify;
+        }
+
+        .text-block {
+            margin-bottom: 20px; /* Space between paragraphs */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-container {
+                font-size: 1em; /* Reduce font size for tablets */
+                line-height: 1.5;
+                padding: 20px 10px;
+            }
+
+            .text-block {
+                margin-bottom: 15px; /* Adjust spacing for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-container {
+                font-size: 0.9em; /* Further reduce font size for mobile */
+                line-height: 1.4;
+                padding: 10px;
+            }
+
+            .text-block {
+                margin-bottom: 15px; /* Adjust spacing for smaller screens */
+            }
+
+            /* Adjust the height of the blank section for mobile */
+            #final {
+                height: 5vh; /* Reduce height for mobile */
+            }
+
+            /* Adjust the height of Section 23 for mobile */
+            #section23 {
+                height: 50vh; /* Reduce height for mobile */
+            }
+
+            /* Adjust the margin for the 3 blocks section for mobile */
+            #background-section-3blocks {
+                margin-top: -10px; /* Reduce negative margin for mobile */
+            }
+
+            /* Adjust the margin for the 2 blocks section for mobile */
+            #background-section-2blocks {
+                margin-top: -10px; /* Reduce negative margin for mobile */
+            }
+        }
+
 
 
     </style>
