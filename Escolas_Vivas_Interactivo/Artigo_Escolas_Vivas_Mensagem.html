@@ -312,6 +312,9 @@
             font-size: 1.2em;
             color: #18224C;
             text-align: justify;
+            display: block; /* Prevents flex from squeezing sections */
+            min-height: auto;
+            overflow: visible;
         }
 
         .text-block {
@@ -363,9 +366,13 @@
         }
 
         #section26 {
-            flex-shrink: 0;
-            margin-bottom: 40px; /* Prevents it from being squeezed */
+            display: block;
+            min-height: auto; /* Ensure it expands as needed */
+            padding: 20px;
+            background-color: #fffaf1;
+            overflow: visible; /* Ensure text is not hidden */
         }
+
 
 
 
