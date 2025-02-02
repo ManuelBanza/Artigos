@@ -306,16 +306,18 @@
         }
 
         .content-container {
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.8;
-            font-size: 1.2em;
-            color: #18224C;
-            text-align: justify;
-            display: block; /* Prevents flex from squeezing sections */
-            min-height: auto;
-            overflow: visible;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: flex-start;
         }
+        #section26 {
+            flex-shrink: 0; /* Prevents it from being squeezed */
+            min-height: auto;
+            padding: 20px;
+        }
+
 
         .text-block {
             margin-bottom: 40px; /* Space between paragraphs */
