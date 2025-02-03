@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Lisboa: Escolas Vivas" />
@@ -674,14 +675,23 @@
                 </a>
             </div>
 
-            <!-- Section 32 -->
-            <div class="text-block" id="section32" style="margin-top: 20px;">
+            <!-- Section 32 - Social Icons -->
+            <div class="text-block" id="section32" style="margin-top: 20px; text-align: center;">
                 <p><strong>Autor: Manuel Banza</strong></p>
-                <p>
-                    <a href="https://manuelbanza.github.io/" target="_blank" style="color: #4fa96a; text-decoration: none;">
-                        Website: https://manuelbanza.github.io/
+                <div class="social-icons">
+                    <a href="https://manuelbanza.github.io/" target="_blank" class="social-icon">
+                        <i class="fas fa-globe"></i>
                     </a>
-                </p>
+                    <a href="https://bsky.app/profile/manuelbanza.bsky.social" target="_blank" class="social-icon">
+                        <img src="https://files.svgcdn.io/simple-icons/bluesky.svg" alt="Bluesky" class="bsky-icon">
+                    </a>
+                    <a href="https://x.com/ManuelBanza" target="_blank" class="social-icon">
+                        <i class="fa-brands fa-x-twitter"></i> <!-- X (Twitter) -->
+                    </a>
+                    <a href="https://www.linkedin.com/in/manuel-banza" target="_blank" class="social-icon">
+                        <i class="fa-brands fa-linkedin-in"></i> <!-- LinkedIn -->
+                    </a>
+                </div>
             </div>
 
         </div>
@@ -691,6 +701,38 @@
 
 
     <style>
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-icon {
+            font-size: 1.8em;
+            color: #333; /* Grey/Black */
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .social-icon:hover {
+            color: #000; /* Black on hover */
+        }
+
+        .bsky-icon {
+            width: 30px;
+            height: 30px;
+            filter: grayscale(100%) brightness(0);
+            transition: filter 0.3s ease-in-out;
+        }
+
+        .bsky-icon:hover {
+            filter: grayscale(100%) brightness(30%);
+        }
+
+
+
         /* Estilo geral das sections */
         .section {
             margin: 0;
