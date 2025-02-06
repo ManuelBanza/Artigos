@@ -85,7 +85,7 @@
         .chapter, .section, .yellow-section {
             position: relative;
             z-index: 1;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -109,6 +109,11 @@
         .chapter1 {
             background-color: #35b591;
         }
+
+        #chapter1 {
+            padding-top: 100px;
+        }
+
         .chapter2 {
             background-color: #f68187;
         }
@@ -367,7 +372,13 @@
         }
 
 
-
+        .image-container img {
+            position: static !important;
+            left: auto !important;
+            transform: none !important;
+            max-width: 100% !important;
+            height: auto !important;
+        }
 
 
 
