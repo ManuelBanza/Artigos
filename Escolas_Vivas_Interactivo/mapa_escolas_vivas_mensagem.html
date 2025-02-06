@@ -215,7 +215,7 @@
         #section11 .image-container img {
             width: auto; /* Adjust width automatically to preserve aspect ratio */
             height: 100%; /* Scale the image to take up full height of the container */
-            max-width: 90%; /* Prevent the image from being too wide */
+            max-width: 80%; /* Prevent the image from being too wide */
             object-fit: contain; /* Ensure the whole image is visible */
             display: block;
             margin: auto; /* Center the image */
@@ -224,6 +224,12 @@
             transform: translateX(-50%); /* Compensate for the image's width to center it perfectly */
         }
 
+        @media (min-width: 1024px) {
+            #section11 .image-container img {
+                max-width: 60% !important; /* Reduce width */
+                height: auto !important;
+            }
+        }
 
 
 
@@ -276,6 +282,13 @@
             transform: translateX(-50%); /* Compensate for the image's width to center it perfectly */
         }
 
+        @media (min-width: 1024px) {
+            #section11 .image-container img,
+            #section14 .image-container img {
+                max-width: 60% !important; /* Reduce width */
+                height: auto !important;
+            }
+        }
 
 
 
